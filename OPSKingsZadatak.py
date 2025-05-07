@@ -76,6 +76,7 @@ while k < 10:
                 if skyDate == i["date"]:
                     holidayDays += skyDate + ": " + skyStatus + "\n"
 
+        #Print output
         print("### scenario URL: https://github.com/Energija-Z/OPSKingsZadatak/blob/main/OPSKingsZadatak.py ###\n")
         print("Hi,\nhere are your San Francisco weather stats for 2022-11:")
         print("The max temperature was: " + str(maxTemp))
@@ -88,8 +89,11 @@ while k < 10:
         print('"Sky" statuses during holidays:')
         print(holidayDays)
         print("Have a nice day!")
+
+        #Set variable to 10, not to repeat the loop
         k = 10
 
     except:
+        #Should server be unreachable, try again
         print("Server unreachable")
         k += 1
