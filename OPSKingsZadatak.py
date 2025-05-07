@@ -45,15 +45,18 @@ while k < 10:
         answer2 = requests.get(urlAdd, None).json()
         answer2 = list(filter(lambda x: x["is_public_holiday"] == "yes", answer2))
 
+        #Iterate through list
         for i in answer:
             temperature = i["degrees_in_celsius"]
 
+            #Compare current temperature if it is higher or lower than compared
             if temperature > maxTemp:
                 maxTemp = temperature
             elif temperature < minTemp:
                 minTemp = temperature
             avgTemp += temperature
 
+            #Add +1 to cloudy map
             skyStatus = i["sky"]
             match skyStatus:
                 case "rainy": cloudyDays["Rainy"] += 1
@@ -62,16 +65,18 @@ while k < 10:
                 case "cloudy": cloudyDays["Cloudy"] += 1
                 case "very cloudy": cloudyDays["Very Cloudy"] += 1
                 case _: None
-            
+
+            #If day has multiple rain days, separate them and assign date
             if i["times_of_rain_showers"] != None:
                 rainDays += rainTimeInDay(i["date"], i["times_of_rain_showers"])
+
+            #Compare the cloudy dates to holiday dates
             for j in answer2:
                 skyDate = j["date"]
                 if skyDate == i["date"]:
                     holidayDays += skyDate + ": " + skyStatus + "\n"
 
-        print("### scenario URL: {YOUR_SCENARIO_URL_HERE} ###\n")
-
+        print("### scenario URL: https://github.com/Energija-Z/OPSKingsZadatak/blob/main/OPSKingsZadatak.py ###\n")
         print("Hi,\nhere are your San Francisco weather stats for 2022-11:")
         print("The max temperature was: " + str(maxTemp))
         print("The avg temperature was: " + str(avgTemp // len(answer)))
@@ -84,7 +89,6 @@ while k < 10:
         print(holidayDays)
         print("Have a nice day!")
         k = 10
-        
 
     except:
         print("Server unreachable")
